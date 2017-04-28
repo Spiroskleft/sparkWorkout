@@ -15,17 +15,34 @@ import java.util.Arrays;
 import static com.google.common.base.Preconditions.checkArgument;
 
 
-
+/**Διαβάζει απο αρχείο και γράφει σε αρχείο
+ *
+ * Για να το τρέξεις
+ * spark-submit --class spark.WordCountTask  sparkTest-1.0-SNAPSHOT.jar /usr/lib/spark/bin/test.txt /usr/lib/spark/bin/testResult
+ *
+ * Το /usr/lib/spark/bin/test.txt είναι το arg[0]
+ *
+ * To /usr/lib/spark/bin/testResult είναι το arg[1]
+ */
 
 public class WordCountTask {
+
+    private static String inputFile;
+    private static String outputDirectory;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WordCountTask.class);
 
     public static void main(String[] args) {
         checkArgument(args.length > 1, "Please provide the path of input file as first parameter.");
+        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
+        inputFile = args[0];
+        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
+        outputDirectory = args[1];
+
         new WordCountTask().run(args[1]);
     }
+
 
 
 
@@ -37,14 +54,15 @@ public class WordCountTask {
                 .setMaster(master);
         JavaSparkContext context = new JavaSparkContext(conf);
 //        JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
-        JavaRDD<String> stringJavaRDD = context.textFile("/tmp/nationalparks.csv");
+        JavaRDD<String> stringJavaRDD = context.textFile(inputFile);
 
-        context.textFile(inputFilePath)
+        context.textFile(outputDirectory)
                 .flatMap(text -> Arrays.asList(text.split(" ")).iterator())
                 .mapToPair(word -> new Tuple2<>(word, 1))
                 .reduceByKey((a, b) -> a + b)
-                .foreach(result -> LOGGER.info(
-                        String.format("Word [%s] count [%d].", result._1(), result._2)));
+                .foreach(result -> System.out.println((
+                        String.format("------------------>Word [%s] count [%d].", result._1(), result._2))));
+
     }
 
 

@@ -14,7 +14,7 @@ public class WriteToFile {
     /**Διαβάζει απο αρχείο και γράφει σε αρχείο
      *
      * Για να το τρέξεις
-     * spark-submit --class spark.  sparkTest-1.0-SNAPSHOT.jar /usr/lib/spark/bin/test.txt /usr/lib/spark/bin/testResult
+     * spark-submit --class spark.WriteToFile  sparkTest-1.0-SNAPSHOT.jar /usr/lib/spark/bin/test.txt /usr/lib/spark/bin/testResult
      *
      * Το /usr/lib/spark/bin/test.txt είναι το arg[0]
      *
