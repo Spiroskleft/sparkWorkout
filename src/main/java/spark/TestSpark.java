@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class TestSpark {
 
+    /**Για να το τρέξεις
+     * spark-submit --class spark.TestSpark  sparkTest-1.0-SNAPSHOT.jar
+     */
+
+
+
     public static void main(String[] args) {
     SparkConf sparkConf = new SparkConf();
 
@@ -22,9 +28,11 @@ public class TestSpark {
 
     JavaRDD<Integer> numbersRDD = context.parallelize(Arrays.asList(1,2,3));
 
+        JavaRDD<String> cRDD = context.textFile("/usr/lib/spark/bin/test.txt");
+        System.out.println("---------------$$$$$------------->"+cRDD.collect().toString());
 
-        JavaRDD<String> lines = context.textFile("");
-        System.out.println("----------@@@@@@-------->"+lines.count());
+//        JavaRDD<String> lines = context.textFile("");
+//        System.out.println("----------@@@@@@-------->"+lines.count());
 
     JavaRDD<Integer> squaresRDD = numbersRDD.map( n -> n*n );
 		System.out.println("----------1----------->"+squaresRDD.collect().toString());
