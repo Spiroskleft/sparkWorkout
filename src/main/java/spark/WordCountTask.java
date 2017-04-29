@@ -4,6 +4,7 @@ package spark; /**
 
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.slf4j.Logger;
@@ -53,16 +54,16 @@ public class WordCountTask {
                 .setAppName(WordCountTask.class.getName())
                 .setMaster(master);
         JavaSparkContext context = new JavaSparkContext(conf);
-//        JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
         JavaRDD<String> stringJavaRDD = context.textFile(inputFile);
 
-        context.textFile(outputDirectory)
-                .flatMap(text -> Arrays.asList(text.split(" ")).iterator())
-                .mapToPair(word -> new Tuple2<>(word, 1))
-                .reduceByKey((a, b) -> a + b)
-                .foreach(result -> System.out.println((
-                        String.format("------------------>Word [%s] count [%d].", result._1(), result._2))));
 
+        JavaPairRDD<String, Integer> counts = stringJavaRDD
+                .flatMap(s -> Arrays.asList(s.split(" ")).iterator())
+                .mapToPair(word -> new Tuple2<>(word, 1))
+                .reduceByKey((a, b) -> a + b);
+        counts.saveAsTextFile(outputDirectory);
+
+        System.out.println("--------->"+counts.toString());
     }
 
 
