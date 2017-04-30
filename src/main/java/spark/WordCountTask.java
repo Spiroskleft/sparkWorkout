@@ -48,12 +48,12 @@ public class WordCountTask {
 
 
     public void run(String inputFilePath) {
-        String master = "local[*]";
+        SparkConf sparkConf = new SparkConf();
 
-        SparkConf conf = new SparkConf()
-                .setAppName(WordCountTask.class.getName())
-                .setMaster(master);
-        JavaSparkContext context = new JavaSparkContext(conf);
+        sparkConf.setAppName("Hello Spark");
+        sparkConf.setMaster("local");
+
+        JavaSparkContext context = new JavaSparkContext(sparkConf);
         JavaRDD<String> stringJavaRDD = context.textFile(inputFile);
 
 
