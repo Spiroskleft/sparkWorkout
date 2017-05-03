@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Created by Spiroskleft@gmail.com on 2/5/2017.
@@ -22,7 +23,7 @@ public class PersonsExcercise {
         SparkConf sparkConf = new SparkConf();
         //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
         inputFile = args[0];
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
+        //Το arg[1] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
         outputDirectory = args[1];
 
         sparkConf.setAppName("Hello Spark");
@@ -51,6 +52,8 @@ public class PersonsExcercise {
     }
 
     private static String stringConcat(String x) {
+
+
 
         int k;
         k = x.indexOf(",");

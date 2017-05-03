@@ -18,7 +18,7 @@ public class NewsExercise {
         SparkConf sparkConf = new SparkConf();
         //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
         inputFile = args[0];
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
+        //Το arg[1] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
         outputDirectory = args[1];
 
         sparkConf.setAppName("Hello Spark");

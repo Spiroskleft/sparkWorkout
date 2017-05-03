@@ -20,7 +20,7 @@ public class Answer2Exercise {
         SparkConf sparkConf = new SparkConf();
         //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο πχ /usr/lib/spark/bin/QuickTourData/news.txt
         inputFile = args[0];
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο πχ /usr/lib/spark/bin/testResult
+        //Το arg[1] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο πχ /usr/lib/spark/bin/testResult
         outputDirectory = args[1];
 
         sparkConf.setAppName("Hello Spark");

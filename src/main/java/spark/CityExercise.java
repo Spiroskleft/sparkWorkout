@@ -1,34 +1,54 @@
 package spark;
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.PairFunction;
+import scala.Tuple2;
 
 /**
  * Created by Spiroskleft@gmail.com on 3/5/2017.
  */
 public class CityExercise {
 
-    private static String inputFile;
+    private static String inputFile1;
+    private static String inputFile2;
     private static String outputDirectory;
 
     public static void main(String[] args) {
         SparkConf sparkConf = new SparkConf();
         //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
-        inputFile = args[0];
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
-        outputDirectory = args[1];
+        inputFile1 = args[0];
+        //Το arg[1] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
+        inputFile2 = args[1];
+        //Το arg[2] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
+        outputDirectory = args[2];
 
         sparkConf.setAppName("Hello Spark");
         sparkConf.setMaster("local");
 
         JavaSparkContext context = new JavaSparkContext(sparkConf);
-        JavaRDD<String> cityInfo = context.textFile(inputFile);
+        JavaRDD<String> cityInfoRDD = context.textFile(inputFile1);
+        JavaRDD<String> personInfoRDD = context.textFile(inputFile2);
+
+        PairFunction<String , String , String> pairFunction =
+                (PairFunction<String, String, String>) s -> TupleNeeded(s);
+
+        JavaPairRDD<String,String > cityInfoPairRDD = cityInfoRDD.mapToPair(pairFunction);
+        JavaPairRDD<String,String > personInfoPairRDD = personInfoRDD.mapToPair(pairFunction);
+
+        System.out.println("*************************************************** City Pair:" + cityInfoPairRDD.collect().toString());
+        System.out.println("*************************************************** Person Pair:" + personInfoPairRDD.collect().toString());
 
 
 
+context.close();
+    }
 
+    public static Tuple2 TupleNeeded (String s){
 
+        return new Tuple2(s.split(",")[0], s.substring(s.indexOf(",")+1,s.length()));
     }
 
 }
