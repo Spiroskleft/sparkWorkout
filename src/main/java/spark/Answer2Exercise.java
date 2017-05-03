@@ -7,6 +7,10 @@ import org.apache.spark.api.java.JavaSparkContext;
 /**
  * Created by Spiroskleft@gmail.com on 2/5/2017.
  */
+
+//Για να το τρέξουμε, μπαίνουμε εντός του φακέλου bin στο spark και πληκτρολογούμε:
+// ./spark-submit --class spark.NewsExercise  sparkTest-1.0-SNAPSHOT.jar /usr/lib/spark/bin/QuickTourData/news.txt /usr/lib/spark/bin/testResult
+
 public class Answer2Exercise {
 
     private static String inputFile;
@@ -14,9 +18,9 @@ public class Answer2Exercise {
 
     public static void main(String[] args) {
         SparkConf sparkConf = new SparkConf();
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο
+        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις πρώτο πχ /usr/lib/spark/bin/QuickTourData/news.txt
         inputFile = args[0];
-        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο
+        //Το arg[0] είναι αυτό το οποίο δίνεις οταν το τρέχεις δέυτερο πχ /usr/lib/spark/bin/testResult
         outputDirectory = args[1];
 
         sparkConf.setAppName("Hello Spark");
@@ -46,6 +50,8 @@ public class Answer2Exercise {
 
         greaterJavaRDD.saveAsTextFile(outputDirectory);
 
+
+        context.close();
     }
 
 // Τέλος πρώτου μέρους άσκησης

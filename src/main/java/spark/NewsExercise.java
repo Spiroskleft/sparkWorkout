@@ -40,5 +40,7 @@ public class NewsExercise {
 
        // System.out.println("********************************* Storie About NEW YORK" + words.filter(x->x.contains("New York")));
 
+
+        context.close();
     }
 }
