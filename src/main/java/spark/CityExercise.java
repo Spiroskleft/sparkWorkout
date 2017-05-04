@@ -49,6 +49,7 @@ public class CityExercise {
         context.close();
     }
 
+
     public static Tuple2 TupleNeeded(String s) {
 
         return new Tuple2(s.split(",")[0], s.substring(s.indexOf(",") + 1, s.length()));
